@@ -14,7 +14,7 @@ namespace IFE
             Redundant=1
         }
 
-        public enum Errors:byte
+        public enum ErrorOK:byte
         {
             OK,
             Error=1
@@ -51,7 +51,7 @@ namespace IFE
             Two = 0x1
         }
 
-        public enum LowHigh : byte
+        public enum HighLow : byte
         {
             Low = 0x0,
             High = 0x1
