@@ -34,6 +34,140 @@ namespace IFE
             return (ushort)retVal;
         }
 
+
+        Dictionary<byte, ushort> _config1CommAddressToAddress;
+        Dictionary<byte, ushort> _config2CommAddressToAddress;
+        Dictionary<byte, ushort> _config3CommAddressToAddress;
+
+        private void Init()
+        {
+            _config1CommAddressToAddress = new Dictionary<byte, ushort>();
+            _config2CommAddressToAddress = new Dictionary<byte, ushort>();
+            _config3CommAddressToAddress = new Dictionary<byte, ushort>();
+            _config1CommAddressToAddress.Add(40, 0x9);
+            _config1CommAddressToAddress.Add(39, 0xC);
+            _config1CommAddressToAddress.Add(38, 0xF);
+            _config1CommAddressToAddress.Add(37, 0x12);
+            _config1CommAddressToAddress.Add(36, 0x15);
+            _config1CommAddressToAddress.Add(35, 0x18);
+            _config1CommAddressToAddress.Add(34, 0x1B);
+            _config1CommAddressToAddress.Add(33, 0x1E);
+            _config1CommAddressToAddress.Add(32, 0x21);
+            _config1CommAddressToAddress.Add(31, 0x24);
+            _config1CommAddressToAddress.Add(30, 0x27);
+            _config1CommAddressToAddress.Add(29, 0x2A);
+            _config1CommAddressToAddress.Add(28, 0x2D);
+            _config1CommAddressToAddress.Add(27, 0x30);
+            _config1CommAddressToAddress.Add(26, 0x33);
+            _config1CommAddressToAddress.Add(25, 0x36);
+            _config1CommAddressToAddress.Add(24, 0x39);
+            _config1CommAddressToAddress.Add(23, 0x3C);
+            _config1CommAddressToAddress.Add(22, 0x3F);
+            _config1CommAddressToAddress.Add(21, 0x42);
+            _config1CommAddressToAddress.Add(20, 0x45);
+            _config1CommAddressToAddress.Add(19, 0x48);
+            _config1CommAddressToAddress.Add(18, 0x4B);
+            _config1CommAddressToAddress.Add(17, 0x4E);
+            _config1CommAddressToAddress.Add(16, 0x51);
+            _config1CommAddressToAddress.Add(15, 0x54);
+            _config1CommAddressToAddress.Add(14, 0x57);
+            _config1CommAddressToAddress.Add(13, 0x5A);
+            _config1CommAddressToAddress.Add(12, 0x5D);
+            _config1CommAddressToAddress.Add(11, 0x60);
+            _config1CommAddressToAddress.Add(10, 0x63);
+            _config1CommAddressToAddress.Add(9, 0x66);
+            _config1CommAddressToAddress.Add(8, 0x69);
+            _config1CommAddressToAddress.Add(7, 0x6C);
+            _config1CommAddressToAddress.Add(6, 0x6F);
+            _config1CommAddressToAddress.Add(5, 0x72);
+            _config1CommAddressToAddress.Add(4, 0x75);
+            _config1CommAddressToAddress.Add(3, 0x78);
+            _config1CommAddressToAddress.Add(2, 0x7B);
+            _config1CommAddressToAddress.Add(1, 0x7E);
+
+            _config2CommAddressToAddress.Add(40, 0xA);
+            _config2CommAddressToAddress.Add(39, 0xD);
+            _config2CommAddressToAddress.Add(38, 0x10);
+            _config2CommAddressToAddress.Add(37, 0x13);
+            _config2CommAddressToAddress.Add(36, 0x16);
+            _config2CommAddressToAddress.Add(35, 0x19);
+            _config2CommAddressToAddress.Add(34, 0x1C);
+            _config2CommAddressToAddress.Add(33, 0x1F);
+            _config2CommAddressToAddress.Add(32, 0x22);
+            _config2CommAddressToAddress.Add(31, 0x25);
+            _config2CommAddressToAddress.Add(30, 0x28);
+            _config2CommAddressToAddress.Add(29, 0x2B);
+            _config2CommAddressToAddress.Add(28, 0x2E);
+            _config2CommAddressToAddress.Add(27, 0x31);
+            _config2CommAddressToAddress.Add(26, 0x34);
+            _config2CommAddressToAddress.Add(25, 0x37);
+            _config2CommAddressToAddress.Add(24, 0x3A);
+            _config2CommAddressToAddress.Add(23, 0x3D);
+            _config2CommAddressToAddress.Add(22, 0x40);
+            _config2CommAddressToAddress.Add(21, 0x43);
+            _config2CommAddressToAddress.Add(20, 0x46);
+            _config2CommAddressToAddress.Add(19, 0x49);
+            _config2CommAddressToAddress.Add(18, 0x4C);
+            _config2CommAddressToAddress.Add(17, 0x4F);
+            _config2CommAddressToAddress.Add(16, 0x52);
+            _config2CommAddressToAddress.Add(15, 0x55);
+            _config2CommAddressToAddress.Add(14, 0x58);
+            _config2CommAddressToAddress.Add(13, 0x5B);
+            _config2CommAddressToAddress.Add(12, 0x5E);
+            _config2CommAddressToAddress.Add(11, 0x61);
+            _config2CommAddressToAddress.Add(10, 0x64);
+            _config2CommAddressToAddress.Add(9, 0x67);
+            _config2CommAddressToAddress.Add(8, 0x6A);
+            _config2CommAddressToAddress.Add(7, 0x6D);
+            _config2CommAddressToAddress.Add(6, 0x70);
+            _config2CommAddressToAddress.Add(5, 0x73);
+            _config2CommAddressToAddress.Add(4, 0x76);
+            _config2CommAddressToAddress.Add(3, 0x79);
+            _config2CommAddressToAddress.Add(2, 0x7C);
+            _config2CommAddressToAddress.Add(1, 0x7F);
+
+            _config3CommAddressToAddress.Add(40, 0xB);
+            _config3CommAddressToAddress.Add(39, 0xE);
+            _config3CommAddressToAddress.Add(38, 0x11);
+            _config3CommAddressToAddress.Add(37, 0x14);
+            _config3CommAddressToAddress.Add(36, 0x17);
+            _config3CommAddressToAddress.Add(35, 0x1A);
+            _config3CommAddressToAddress.Add(34, 0x1D);
+            _config3CommAddressToAddress.Add(33, 0x20);
+            _config3CommAddressToAddress.Add(32, 0x23);
+            _config3CommAddressToAddress.Add(31, 0x26);
+            _config3CommAddressToAddress.Add(30, 0x29);
+            _config3CommAddressToAddress.Add(29, 0x2C);
+            _config3CommAddressToAddress.Add(28, 0x2F);
+            _config3CommAddressToAddress.Add(27, 0x32);
+            _config3CommAddressToAddress.Add(26, 0x35);
+            _config3CommAddressToAddress.Add(25, 0x38);
+            _config3CommAddressToAddress.Add(24, 0x3B);
+            _config3CommAddressToAddress.Add(23, 0x3E);
+            _config3CommAddressToAddress.Add(22, 0x41);
+            _config3CommAddressToAddress.Add(21, 0x44);
+            _config3CommAddressToAddress.Add(20, 0x47);
+            _config3CommAddressToAddress.Add(19, 0x4A);
+            _config3CommAddressToAddress.Add(18, 0x4D);
+            _config3CommAddressToAddress.Add(17, 0x50);
+            _config3CommAddressToAddress.Add(16, 0x53);
+            _config3CommAddressToAddress.Add(15, 0x56);
+            _config3CommAddressToAddress.Add(14, 0x59);
+            _config3CommAddressToAddress.Add(13, 0x5C);
+            _config3CommAddressToAddress.Add(12, 0x5F);
+            _config3CommAddressToAddress.Add(11, 0x62);
+            _config3CommAddressToAddress.Add(10, 0x65);
+            _config3CommAddressToAddress.Add(9, 0x68);
+            _config3CommAddressToAddress.Add(8, 0x6B);
+            _config3CommAddressToAddress.Add(7, 0x6E);
+            _config3CommAddressToAddress.Add(6, 0x71);
+            _config3CommAddressToAddress.Add(5, 0x74);
+            _config3CommAddressToAddress.Add(4, 0x77);
+            _config3CommAddressToAddress.Add(3, 0x7A);
+            _config3CommAddressToAddress.Add(2, 0x7D);
+            _config3CommAddressToAddress.Add(1, 0x80);
+        }
+
         /// <summary>
         /// Gets the device handle by index
         /// </summary>
@@ -42,6 +176,7 @@ namespace IFE
         public void OpenDevice(int index = 0)
         {
             _commManager.OpenDevice(index);
+            Init();
         }
 
         /// <param name="channelNumber">1-31</param>
@@ -154,6 +289,193 @@ namespace IFE
 
         }
 
+        int _channelNumber;
+        Enums.CardId _cardId;
+        byte _fpga;
+
+        public void Configure(int channelNumber, Enums.CardId cardId,byte fpga)
+        {
+            _channelNumber = channelNumber;
+            _cardId = cardId;
+            _fpga = fpga;
+        }
+
+        public void GetFpgaVersion(out byte fpgaVersion)
+        {
+            ReadMessage(_channelNumber, _cardId, _fpga, 0x0, 1, out byte[] receivedBytes);
+            fpgaVersion = receivedBytes[0];
+        }
+
+        public void GetFpgaYear(out byte fpgaYear)
+        {
+            ReadMessage(_channelNumber, _cardId, _fpga, 0x1, 1, out byte[] receivedBytes);
+            fpgaYear = receivedBytes[0];
+        }
+
+        public void GetFpgaMonth(out byte fpgaMonth)
+        {
+            ReadMessage(_channelNumber, _cardId, _fpga, 0x2, 1, out byte[] receivedBytes);
+            fpgaMonth = receivedBytes[0];
+        }
+
+        public void GetFpgaDay(out byte fpgaDay)
+        {
+            ReadMessage(_channelNumber, _cardId, _fpga, 0x3, 1, out byte[] receivedBytes);
+            fpgaDay = receivedBytes[0];
+        }
+
+        #region ResetUART
+        public void ResetUART40_33(Enums.ResetOper rstUart33, Enums.ResetOper rstUart34, Enums.ResetOper rstUart35, Enums.ResetOper rstUart36,
+                                     Enums.ResetOper rstUart37, Enums.ResetOper rstUart38, Enums.ResetOper rstUart39, Enums.ResetOper rstUart40)
+        {
+
+            WriteMessageBits(0x4, rstUart33, rstUart34, rstUart35, rstUart36, rstUart37, rstUart38, rstUart39, rstUart40);
+        }
+
+
+        public void ResetUART32_25(Enums.ResetOper rstUart25, Enums.ResetOper rstUart26, Enums.ResetOper rstUart27, Enums.ResetOper rstUart28,
+                             Enums.ResetOper rstUart29, Enums.ResetOper rstUart30, Enums.ResetOper rstUart31, Enums.ResetOper rstUart32)
+        {
+
+            WriteMessageBits(0x5, rstUart25, rstUart26, rstUart27, rstUart28, rstUart29, rstUart30, rstUart31, rstUart32);
+        }
+
+        public void ResetUART24_17(Enums.ResetOper rstUart17, Enums.ResetOper rstUart18, Enums.ResetOper rstUart19, Enums.ResetOper rstUart20,
+                                   Enums.ResetOper rstUart21, Enums.ResetOper rstUart22, Enums.ResetOper rstUart23, Enums.ResetOper rstUart24)
+        {
+            WriteMessageBits(0x6,rstUart17, rstUart18, rstUart19, rstUart20, rstUart21, rstUart22, rstUart23, rstUart24);
+        }
+
+        public void ResetUART16_9(Enums.ResetOper rstUart9, Enums.ResetOper rstUart10, Enums.ResetOper rstUart11, Enums.ResetOper rstUart12,
+                          Enums.ResetOper rstUart13, Enums.ResetOper rstUart14, Enums.ResetOper rstUart15, Enums.ResetOper rstUart16)
+        {
+            WriteMessageBits(0x6, rstUart9, rstUart10, rstUart11, rstUart12, rstUart13, rstUart14, rstUart15, rstUart16);
+        }
+
+        public void ResetUART8_1(Enums.ResetOper rstUart1, Enums.ResetOper rstUart2, Enums.ResetOper rstUart3, Enums.ResetOper rstUart4,
+                         Enums.ResetOper rstUart5, Enums.ResetOper rstUart6, Enums.ResetOper rstUart7, Enums.ResetOper rstUart8)
+        {
+            WriteMessageBits(0x6, rstUart1, rstUart2, rstUart3, rstUart4, rstUart5, rstUart6, rstUart7, rstUart8);
+        }
+        #endregion
+
+        #region  BroadcastUART
+        public void BroadcastUART40_33(Enums.EnableDisable en33, Enums.EnableDisable en34, Enums.EnableDisable en35, Enums.EnableDisable en36,
+                              Enums.EnableDisable en37, Enums.EnableDisable en38, Enums.EnableDisable en39, Enums.EnableDisable en40)
+        {
+
+            WriteMessageBits(0x81, en33, en34, en35, en36, en37, en38, en39, en40);
+        }
+
+        public void BroadcastUART32_25(Enums.EnableDisable en25, Enums.EnableDisable en26, Enums.EnableDisable en27, Enums.EnableDisable en28,
+                               Enums.EnableDisable en29, Enums.EnableDisable en30, Enums.EnableDisable en31, Enums.EnableDisable en32)
+        {
+            WriteMessageBits(0x82, en25, en26, en27, en28, en29, en30, en31, en32);
+        }
+
+        public void BroadcastUART24_17(Enums.EnableDisable en17, Enums.EnableDisable en18, Enums.EnableDisable en19, Enums.EnableDisable en20,
+                               Enums.EnableDisable en21, Enums.EnableDisable en22, Enums.EnableDisable en23, Enums.EnableDisable en24)
+        {
+            WriteMessageBits(0x83, en17, en18, en19, en20, en21, en22, en23, en24);
+        }
+
+        public void BroadcastUART16_9(Enums.EnableDisable en9, Enums.EnableDisable en10, Enums.EnableDisable en11, Enums.EnableDisable en12,
+                              Enums.EnableDisable en13, Enums.EnableDisable en14, Enums.EnableDisable en15, Enums.EnableDisable en16)
+        {
+            WriteMessageBits(0x84, en9, en10, en11, en12, en13, en14, en15, en16);
+        }
+
+        public void BroadcastUART8_1(Enums.EnableDisable en1, Enums.EnableDisable en2, Enums.EnableDisable en3, Enums.EnableDisable en4,
+                             Enums.EnableDisable en5, Enums.EnableDisable en6, Enums.EnableDisable en7, Enums.EnableDisable en8)
+        {
+            WriteMessageBits(0x85, en1, en2, en3, en4, en5, en6, en7, en8);
+        }
+        #endregion
+
+        public void BroadcastSPW3_4(Enums.EnableDisable bcSpw3, Enums.EnableDisable bcSpw4)
+        {
+            Enums.EnableDisable reserved = Enums.EnableDisable.Disable;
+            WriteMessageBits(0x86, bcSpw3, bcSpw4, reserved, reserved, reserved, reserved, reserved, reserved);
+        }
+
+        #region UartConfig
+        public void UartConfig1(byte port,byte timeOut)
+        {
+            WriteUartConfig1(_config1CommAddressToAddress[port], timeOut);
+        }
+
+        public void UartConfig2(byte port, Enums.Parity parity, Enums.TwoOne stopBit, Enums.BaudRate baudRate)
+        {
+            WriteUartConfig2(_config2CommAddressToAddress[port], parity,stopBit,baudRate);
+        }
+
+        public void UartConfig3(byte port, Enums.EnableDisable uartEnable, Enums.TxEnable txEnable, byte dataLength = 8)
+        {
+            WriteUartConfig3(_config3CommAddressToAddress[port], uartEnable, txEnable, dataLength);
+        }
+
+        public void SPW3_Config(byte spwDataRate)
+        {
+            byte[] data2Send = { spwDataRate };
+            WriteMessage(_channelNumber, _cardId, _fpga, 0x87, data2Send);
+        }
+
+        public void SPW4_Config(byte spwDataRate)
+        {
+            byte[] data2Send = { spwDataRate };
+            WriteMessage(_channelNumber, _cardId, _fpga, 0x88, data2Send);
+        }
+
+        public void GPIOsLedsControl()
+        {
+
+        }
+
+        private void WriteUartConfig1(ushort startAddress,byte timeOut)
+        {
+            byte[] data2Send = { timeOut };
+            WriteMessage(_channelNumber, _cardId, _fpga, startAddress, data2Send);
+        }
+
+        private void WriteUartConfig2(ushort startAddress, Enums.Parity parity, Enums.TwoOne stopBit, Enums.BaudRate baudRate)
+        {
+            byte byteSend = Convert.ToByte(Convert.ToByte(parity)| Convert.ToByte(stopBit)<<2| Convert.ToByte(baudRate) << 4);
+            byte[] data2Send = { byteSend };
+            WriteMessage(_channelNumber, _cardId, _fpga, startAddress, data2Send);
+        }
+
+        private void WriteUartConfig3(ushort startAddress,Enums.EnableDisable uartEnable,Enums.TxEnable txEnable,byte dataLength=8)
+        { 
+            byte byteSend = Convert.ToByte(Convert.ToByte(uartEnable) | Convert.ToByte(txEnable) << 1 | (dataLength) << 2);
+            byte[] data2Send = { byteSend };
+            WriteMessage(_channelNumber, _cardId, _fpga, startAddress, data2Send);
+        }
+
+     
+
+        #endregion
+
+        private static T[] PackValuesToArray<T>(T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8)
+        {
+            return new T[]
+            {
+                item1, item2, item3, item4,
+                item5, item6, item7, item8
+            };
+        }
+
+        private void WriteMessageBits<T>(byte startAddress, T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8)
+        {
+            byte value=0;
+
+            var bits=PackValuesToArray(item1, item2, item3, item4, item5, item6, item7, item8);
+            for (int i=0;i<bits.Length;i++)
+            {
+                value = _conversions.SetBits(value,  Convert.ToByte(bits[i]), i);
+            }
+            byte[] data2Send = { value };
+            WriteMessage(_channelNumber, _cardId, _fpga, startAddress, data2Send);
+        }
 
     }
 }
