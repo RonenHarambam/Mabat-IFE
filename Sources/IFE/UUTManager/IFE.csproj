@@ -74,6 +74,8 @@
       <Link>Brik\Structs\StarVersionInfo.cs</Link>
     </Compile>
     <Compile Include="Enums.cs" />
+    <Compile Include="Helper.cs" />
+    <Compile Include="StateMachineIFE.cs" />
     <Compile Include="UUTManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

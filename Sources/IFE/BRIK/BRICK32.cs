@@ -234,6 +234,7 @@ namespace DeviceManager.BRICK32
                 throw new Exception("Cannot receive packet. Details:" + status.ToString());
             }
 
+
             receiveBufferBytes = new byte[receiveBufferLength];
 
             for (int i = 0; i < receiveBufferLength; i++)

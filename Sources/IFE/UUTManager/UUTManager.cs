@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OTools;
+using System.Threading;
 
 namespace IFE
 {
@@ -13,33 +14,18 @@ namespace IFE
     /// </summary>
     public class UUTManager
     {
-        const ushort SYNC = 0xEB6B;
 
-        BRICK32 _commManager=new BRICK32();
-
-        ConversionsBase _conversions = new  ConversionsBigEndian();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        private ushort CalculateChecksum(byte[] data)
-        {
-            int retVal=0;
-
-            foreach(byte dataByte in data)
-            {
-                retVal = retVal + dataByte;
-            }
-            return (ushort)retVal;
-        }
-
+        BRICK32 _commManager = new BRICK32();
+        ConversionsBase _conversions = new ConversionsBigEndian();
+        StateMachineIFE _stateMachine = new StateMachineIFE();
 
         Dictionary<byte, ushort> _config1CommAddressToAddressOffset;
         Dictionary<byte, ushort> _config2CommAddressToAddressOffset;
         Dictionary<byte, ushort> _config3CommAddressToAddressOffset;
         Dictionary<byte, ushort> _uartStatusCommStatusToAddressOffset;
+        ManualResetEvent _manautResetEvent = new ManualResetEvent(false);
+        bool _abortRead;
+        byte[] _newData;
 
         private void Init()
         {
@@ -213,6 +199,12 @@ namespace IFE
             _uartStatusCommStatusToAddressOffset.Add(1, 0xB5);
         }
 
+        private void OnStateMachineNewData(object sender, StateMachineBase.NewDataArg e)
+        {
+            _newData = e.NewData;
+            _manautResetEvent.Set();
+        }
+
         /// <summary>
         /// Gets the device handle by index
         /// </summary>
@@ -221,6 +213,7 @@ namespace IFE
         public void OpenDevice(int index = 0)
         {
             _commManager.OpenDevice(index);
+            
             Init();
         }
 
@@ -230,6 +223,8 @@ namespace IFE
         public void OpenChannel(int channelNumber, STAR_CHANNEL_DIRECTION channelDirection = STAR_CHANNEL_DIRECTION.STAR_CHANNEL_DIRECTION_INOUT)
         {
             _commManager.OpenChannel(channelNumber, channelDirection);
+            _stateMachine.NewDataEvent += new StateMachineBase.NewDataEventHandler(OnStateMachineNewData);
+            Thread thrd = new Thread(ReadDataThread);
         }
 
         /// <summary>
@@ -251,6 +246,7 @@ namespace IFE
         public void CloseAllChannels()
         {
             _commManager.CloseAllChannels();
+            _abortRead = true;
         }
 
         /// <summary>
@@ -260,13 +256,13 @@ namespace IFE
         /// <param name="fpga"></param>
         /// <param name="startAddress"></param>
         /// <param name=""></param>
-        public void WriteMessage(int channelNumber,Enums.CardId cardId, byte fpga,ushort startAddress,byte[] data)
+        public void WriteMessage(int channelNumber, Enums.CardId cardId, byte fpga, ushort startAddress, byte[] data)
         {
             byte[] tmp;
             List<byte> bufferToSend = new List<byte>();
 
             //Sync
-            tmp=_conversions.UShortToBytes(SYNC);
+            tmp = _conversions.UShortToBytes(StateMachineIFE.SYNC);
             bufferToSend.AddRange(tmp);
 
             //Card ID + FPGA
@@ -287,12 +283,24 @@ namespace IFE
             bufferToSend.AddRange(data);
 
             //Checksum
-            ushort checksum=CalculateChecksum(data);
+            ushort checksum = Helper.CalculateChecksum(data);
             tmp = _conversions.UShortToBytes(checksum);
             bufferToSend.AddRange(tmp);
 
             _commManager.TransmitPacket(channelNumber, bufferToSend.ToArray());
 
+        }
+
+        private void WaitForResponse(out byte[] newData)
+        {
+            if(_manautResetEvent.WaitOne(1000))
+            {
+                newData = _newData;
+            }
+            else
+            {
+                throw new Exception("Device not responding or answer is not as exepcted");
+            }
         }
 
         /// <summary>
@@ -304,13 +312,13 @@ namespace IFE
         /// <param name="startAddress"></param>
         /// <param name="numberOfBytesToRead"></param>
         /// <param name="receivedBytes"></param>
-        private void ReadMessage(int channelNumber,Enums.CardId cardId, byte fpga, ushort startAddress, ushort numberOfBytesToRead,out byte[] receivedBytes)
+        private void ReadMessage(int channelNumber, Enums.CardId cardId, byte fpga, ushort startAddress, ushort numberOfBytesToRead, out byte[] receivedBytes)
         {
             byte[] tmp;
             List<byte> bufferToSend = new List<byte>();
 
             //Sync
-            tmp = _conversions.UShortToBytes(SYNC);
+            tmp = _conversions.UShortToBytes(StateMachineIFE.SYNC);
             bufferToSend.AddRange(tmp);
 
             //Card ID + FPGA
@@ -326,12 +334,43 @@ namespace IFE
             bufferToSend.AddRange(tmp);
 
             //Send
+            _stateMachine.Init();
+            _manautResetEvent.Reset();
             _commManager.TransmitPacket(channelNumber, bufferToSend.ToArray());
 
             //Receive
-            receivedBytes = new byte[numberOfBytesToRead];
-            _commManager.ReceivePacket(channelNumber, out receivedBytes);
+            WaitForResponse(out receivedBytes);
 
+            //receivedBytes = new byte[numberOfBytesToRead];
+            //_commManager.ReceivePacket(channelNumber, out receivedBytes, 1000);
+            //_stateMachine.Process(receivedBytes);
+            //if(_stateMachine.ProcessComplete(out byte[] newData))
+            //{
+            //    receivedBytes = newData;
+            //}
+            //else
+            //{
+            //    throw new Exception("Device not responding or answer is not as exepcted");
+            //}
+        }
+
+  
+        private void ReadDataThread()
+        {
+            while (!_abortRead)
+            {
+                try
+                {
+                    _commManager.ReceivePacket(_channelNumber, out byte[] receivedBytes, 1000);
+                    if(receivedBytes.Length>0)
+                    {
+                        _stateMachine.Process(receivedBytes);
+                    }
+                }
+                catch
+                {
+                }
+            }
         }
 
         int _channelNumber;
